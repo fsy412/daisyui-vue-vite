@@ -1,18 +1,26 @@
 <template>
-  <label for="my-modal" class="btn modal-button">open modal</label>
+  <Header />
+  <TopBar class="mt-0.5" />
 
-  <!-- Put this part before </body> tag -->
-  <input type="checkbox" id="my-modal" class="modal-toggle" />
-  <div class="modal">
-    <div class="modal-box">
-      <h3 class="font-bold text-lg">Congratulations random Interner user!</h3>
-      <p class="py-4">
-        You've been selected for a chance to get one year of subscription to use
-        Wikipedia for free!
-      </p>
-      <div class="modal-action">
-        <label for="my-modal" class="btn">Yay!</label>
-      </div>
+  <div class="contentWrapper">
+    <div class="left w-1/6 py-4 h-full">
+      <TradeMenu />
     </div>
   </div>
 </template>
+
+<script>
+import Header from './components/Header.vue'
+import TopBar from './components/TopBar.vue'
+import TradeMenu from './components/TradeMenu.vue'
+
+export default {
+  components: {
+    Header,
+    TopBar,
+    TradeMenu,
+  },
+}
+</script>
+
+<style></style>
