@@ -1,20 +1,25 @@
 <template>
-  <div class="h-16 bg-gray-800 flex items-center">
-    <div class="dropdown w-full">
-      <label tabindex="0" class="btn m-1 px-10">CKB-USDT</label>
-      <ul
-        tabindex="0"
-        class="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52"
-      >
-        <li><a>CKB-USDT</a></li>
-        <li><a>BNB-USDT</a></li>
+  <div class="h-15 bg-gray-900 flex items-center w-full">
+    <div class="dropdown w-1/5 bg-gray-500">
+      <label tabindex="0" class="btn w-full rounded-none">CKB-USDT</label>
+      <ul tabindex="0" class="dropdown-content menu shadow bg-base-100 rounded-none w-full">
+        <li>
+          <a class="text-center w-full flex flex-row justify-center">BTC-USDT</a>
+        </li>
+        <li>
+          <a class="text-center w-full flex flex-row justify-center">BNB-USDT</a>
+        </li>
       </ul>
     </div>
   </div>
 </template>
 
 <script>
-export default {}
+export default {};
 </script>
 
-<style></style>
+<style scoped>
+span {
+  text-align: center;
+}
+</style>
