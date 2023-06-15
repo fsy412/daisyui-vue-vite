@@ -1,26 +1,28 @@
 <template>
-  <div class="tabs text-gray-300 w-1/5 ">
-    <!-- <a class="w-1/2 tab tab-bordered tab-active text-gray-300">Limit</a>
-    <a class="w-1/2 tab tab-bordered  text-gray-300">Market</a> -->
-
-    <div class=" ml-2">
-      <span>Create Order</span>
-
+  <div class="p-1 tabs text-gray-300 md:w-1/5 2xl:w-[15%] flex flex-col justify-start">
+    <div class="flex w-full flex-col">
+      <span class="text-left">Create Order</span>
+      <!-- <div class="w-full flex justify-evenly space-x-1">
+        <button class="btn w-1/2 ">Buy</button>
+        <button class="btn btn-neutral w-1/2 px-1">Sell</button>
+      </div> -->
+      <div class="tabs tabs-boxed bg-neutral text-gray-200">
+        <a class="tab tab-active w-1/2">Buy</a>
+        <a class="tab  text-gray-200 w-1/2">Sell</a>
+      </div>
     </div>
-    <div class="mx-auto  mt-1">
-
+    <div class="mx-auto mt-2 w-full">
       <OrderType></OrderType>
-
       <div class="form-control rounded-none bg-neutral mt-2">
-        <div class="input-group ">
-          <span class="rounded-none  bg-neutral text-gray-300 w-[80px]">Price</span>
+        <div class="input-group">
+          <span class="rounded-none bg-neutral text-gray-300 w-[80px]">Price</span>
           <input type="text" placeholder="10" class="input input-bordered h-8 w-28 rounded-none bg-neutral" />
           <span class="w-20 rounded-none bg-neutral">USD</span>
         </div>
       </div>
       <div class="form-control rounded-none bg-neutral">
-        <div class="input-group ">
-          <span class="rounded-none  bg-neutral text-gray-300 w-[80px]">Amount</span>
+        <div class="input-group">
+          <span class="rounded-none bg-neutral text-gray-300 w-[80px]">Amount</span>
           <input type="text" placeholder="10" class="input input-bordered h-8 w-28 rounded-none bg-neutral" />
           <span class="w-20 rounded-none bg-neutral">USD</span>
         </div>
@@ -36,7 +38,6 @@
         <span>100</span>
       </div>
     </div>
-
     <div class="mt-20 w-full px-2">
       <button class="py-2 w-full bg-neutral rounded-sm">Connect Wallet</button>
     </div>
@@ -44,7 +45,7 @@
 </template>
 
 <script setup>
-import OrderType from "./OrderType.vue"
+import OrderType from "./OrderType.vue";
 </script>
 
 <style scoped>

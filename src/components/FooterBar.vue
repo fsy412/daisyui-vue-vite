@@ -1,6 +1,6 @@
 <template>
-    <div class="">
-        <footer class="mx-auto  flex flex-row p-2 text-center items-center footer bg-neutral text-neutral-content">
+    <div class="fixed bottom-0 w-full">
+        <footer class="mx-auto flex flex-row text-center items-center footer bg-neutral text-neutral-content">
             <div class="pl-2">
                 <svg width="100%" height="22" viewBox="0 0 101 88" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path
@@ -57,14 +57,15 @@
             </div>
             <div class="grid-flow-col gap-4 text-center pr-2">
                 <div>
-                    <p class="text-white text-base font-light cursor-default ">
+                    <p class="text-white text-base font-light cursor-default">
                         Powered by
                     </p>
                     <a rel="noreferrer" href="https://solana.com/" target="_blank"
                         class="text-white text-base font-bold hover:text-primary-dark transition-all duration-200">
-                    Solana
-                </a>
+                        Solana
+                    </a>
+                </div>
             </div>
-        </div>
-    </footer>
-</div></template>
+        </footer>
+    </div>
+</template>

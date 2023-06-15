@@ -24,12 +24,12 @@
           <li><a>Item 3</a></li>
         </ul>
       </div>
-      <a class="btn btn-ghost normal-case text-xl">NevDEX</a>
+      <a class="btn btn-ghost normal-case text-3xl   text-transparent bg-clip-text bg-gradient-to-tr from-[#9945FF] to-[#14F195]">FantomDEX</a>
     </div>
     <div class="navbar-center hidden lg:flex">
       <ul class="menu menu-horizontal p-0">
         <li><a>Trade</a></li>
-        <li tabindex="0">
+        <!-- <li tabindex="0">
           <a>
             Farm
             <svg class="fill-current" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
@@ -40,13 +40,13 @@
             <li><a>Submenu 1</a></li>
             <li><a>Submenu 2</a></li>
           </ul>
-        </li>
-        <li><a>NFT Store</a></li>
+        </li> -->
+        <li><a>Faucet</a></li>
       </ul>
     </div>
     <div class="navbar-end">
       <!-- <a class="btn">Connect Wallet</a> -->
-       <ConnectWallet></ConnectWallet>  
+      <ConnectWallet></ConnectWallet>
     </div>
   </div>
 </template>
