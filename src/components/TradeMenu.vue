@@ -1,12 +1,17 @@
 <template>
   <div class="tabs text-gray-300 w-1/5 ">
-    <a class="w-1/2 tab tab-bordered tab-active text-gray-300">Limit</a>
-    <a class="w-1/2 tab tab-bordered  text-gray-300">Market</a>
+    <!-- <a class="w-1/2 tab tab-bordered tab-active text-gray-300">Limit</a>
+    <a class="w-1/2 tab tab-bordered  text-gray-300">Market</a> -->
+
+    <div class=" ml-2">
+      <span>Create Order</span>
+
+    </div>
     <div class="mx-auto  mt-1">
-    
-        <OrderType></OrderType>
-   
-      <div class="form-control rounded-none bg-neutral">
+
+      <OrderType></OrderType>
+
+      <div class="form-control rounded-none bg-neutral mt-2">
         <div class="input-group ">
           <span class="rounded-none  bg-neutral text-gray-300 w-[80px]">Price</span>
           <input type="text" placeholder="10" class="input input-bordered h-8 w-28 rounded-none bg-neutral" />
@@ -21,7 +26,7 @@
         </div>
       </div>
     </div>
-    <!-- <div class="w-full px-2 mt-6">
+    <div class="w-full px-2 mt-6">
       <input type="range" min="0" max="100" value="25" class="range range-xs h-3" step="25" />
       <div class="w-full flex justify-between text-xs px-2">
         <span>0</span>
@@ -30,7 +35,11 @@
         <span>75</span>
         <span>100</span>
       </div>
-    </div> -->
+    </div>
+
+    <div class="mt-20 w-full px-2">
+      <button class="py-2 w-full bg-neutral rounded-sm">Connect Wallet</button>
+    </div>
   </div>
 </template>
 
