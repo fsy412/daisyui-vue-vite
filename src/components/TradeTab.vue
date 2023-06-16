@@ -15,6 +15,8 @@
                     <th>Price</th>
                     <th>Filled</th>
                     <th>  Time</th>
+
+                    <th>  Operation</th>
                 </tr>
             </thead>
             <tbody class="text-gray-400">
@@ -25,7 +27,8 @@
                     <td>{{ item.Size }}</td>
                     <td>{{ item.Price }}</td>
                     <td>{{ item.Filled }}</td>
-                    <td>{{ 0 }}</td>
+                    <td>{{ '2023-5-7 11:20:43' }}</td>
+                    <td>cancel</td>
                 </tr>
             </tbody>
         </table>

@@ -25,7 +25,7 @@
       </div>
     </div>
     <div class="w-full px-2 mt-6">
-      <input type="range" min="0" max="100" value="25" class="range range-xs h-3" step="25" />
+      <input type="range" min="0" max="100" value="0" class="range range-xs h-3" step="25" />
       <div class="w-full flex justify-between text-xs px-2">
         <span>0</span>
         <span>25</span>

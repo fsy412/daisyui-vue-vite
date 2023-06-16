@@ -27,7 +27,7 @@
       <a class="btn btn-ghost normal-case text-3xl   text-transparent bg-clip-text bg-gradient-to-tr from-[#9945FF] to-[#14F195]">FantomDEX</a>
     </div>
     <div class="navbar-center hidden lg:flex">
-      <ul class="menu menu-horizontal p-0">
+      <ul class="menu menu-horizontal p-0 font-bold" >
         <li><a>Trade</a></li>
         <!-- <li tabindex="0">
           <a>
