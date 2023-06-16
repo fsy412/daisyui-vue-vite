@@ -8,22 +8,24 @@
         <table class="w-full">
             <thead class=" ">
                 <tr class="text-gray-300 text-left">
-                    <th>Market</th>
+                    <th class="">Market</th>
                     <th>Type</th>
                     <th>Side</th>
                     <th>Size</th>
                     <th>Price</th>
                     <th>Filled</th>
+                    <th>  Time</th>
                 </tr>
             </thead>
             <tbody class="text-gray-400">
                 <tr v-for="(item, index) in trades" :key="index" class="">
-                    <th>{{ item.Market }}</th>
+                    <th class="text-left"> {{ item.Market }}</th>
                     <td>{{ item.Type }}</td>
                     <td>{{ item.Side }}</td>
                     <td>{{ item.Size }}</td>
                     <td>{{ item.Price }}</td>
                     <td>{{ item.Filled }}</td>
+                    <td>{{ 0 }}</td>
                 </tr>
             </tbody>
         </table>

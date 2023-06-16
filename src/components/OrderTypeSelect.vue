@@ -3,20 +3,32 @@
         <div class="dropdown w-full h-8">
             <label tabindex="0"
                 class="outline outline-gray-600 outline-1 rounded-sm flex flex-row flex-start item-center bg-gray-700 text-white items-center w-full text-left e h-full">
-                <span class="ml-2 w-full">Limit</span></label>
+                <span class="ml-2 w-full">{{ store.state.orderType }}</span></label>
 
             <ul tabindex="0" class="dropdown-content menu shadow rounded-none w-full h-full">
                 <li class="w-full bg-gray-400">
-                    <a class="w-full h-full py-1">Limit</a>
+                    <a class="w-full h-full py-1" @click="handleClick('limit')">limit</a>
                 </li>
                 <li class="w-full bg-gray-400">
-                    <a class="w-full h-full py-1">Market</a>
+                    <a class="w-full h-full py-1" @click="handleClick('market')">market</a>
                 </li>
             </ul>
         </div>
     </div>
 </template>
-<script>
-export default {};
+<script setup>
+import store from '../vuex'
+
+function setOrderType(orderType) {
+    store.commit('setOrderType', { orderType });
+}
+
+const handleClick = (orderType) => {
+    setOrderType(orderType)
+    const elem = document.activeElement;
+    if (elem) {
+        elem?.blur();
+    }
+};
 </script>
 <style></style>

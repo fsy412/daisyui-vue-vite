@@ -1,9 +1,7 @@
 <script setup>
 import { WalletMultiButton } from 'solana-wallets-vue'
 import store from '../vuex'
-function flipAutoConnect(balance) {
-  store.commit('setAutoConnect')
-}
+
 </script>
 
 <template>
@@ -13,7 +11,6 @@ function flipAutoConnect(balance) {
       <div class="navbar-start">
         <router-link to="/" class="text-xl font-bold text-gray-800 md:text-2xl hover:text-blue-400">
           <div class="hidden sm:inline w-22 h-22 md:p-2">
-
           </div>
         </router-link>
       </div>

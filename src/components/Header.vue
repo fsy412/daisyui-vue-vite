@@ -45,7 +45,6 @@
       </ul>
     </div>
     <div class="navbar-end">
-      <!-- <a class="btn">Connect Wallet</a> -->
       <ConnectWallet></ConnectWallet>
     </div>
   </div>
