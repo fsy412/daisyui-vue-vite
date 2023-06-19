@@ -20,10 +20,8 @@ function setMarketType(market) {
 
 const handleClick = (market) => {
     const elem = document.activeElement;
+    elem?.blur();
     setMarketType(market)
-    if (elem) {
-        elem?.blur();
-    }
 };
 
 </script>

@@ -106,7 +106,7 @@ export default {
       }
 
 
-      klines({ symbol: `${base}${quote}`, interval: this.span })
+      kline({ symbol: `${base}${quote}`, interval: this.span })
         .then((res) => {
           let data = JSON.parse(res);
           const cdata = data.map((d) => {

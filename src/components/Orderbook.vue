@@ -31,29 +31,29 @@
     </div>
 </template>
 
-<script setup >
+<script setup>
 import { ref, onMounted, onUnmounted } from "vue";
 
-import { orderbook } from "../api"
+import { orderbook } from "../api";
 
-const timer = ref()
+const timer = ref();
 
 onMounted(() => {
     timer.value = setInterval(async () => {
         // do something
-        console.log('tick')
+        console.log("tick");
         let ret = await orderbook({
-            "marketID": "BTC-USDT"
-        })
-        console.log('ret', ret)
-        console.log( JSON.parse(ret))
-    }, 1500)
-})
+            marketID: "BTC-USDT",
+        });
+        // console.log('ret', ret)
+        // console.log( JSON.parse(ret))
+    }, 1500);
+});
 
 onUnmounted(() => {
-    clearInterval(timer.value)
-    timer.value = ""
-})
+    clearInterval(timer.value);
+    timer.value = "";
+});
 </script>
 
 <style scoped>

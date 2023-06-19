@@ -1,10 +1,11 @@
 import { ethers } from "ethers";
 
 export default {
-  state: () => ({
-    account: "",
-    tokenAllowance: 0,
-  }),
+  state() {
+    return {
+      account: "",
+    };
+  },
   actions: {
     connectNetwork({ state }) {
       const getInfo = async () => {
@@ -40,10 +41,16 @@ export default {
         const account = (
           await ethereum.request({ method: "eth_requestAccounts" })
         )[0];
-
+        state.account = account;
         console.log("  chainId", chainId, account);
       };
       getInfo();
+    },
+  },
+  mutations: {
+    clearAccount(state) {
+      console.log("clearAccount");
+      state.account = "";
     },
   },
   getters: {
