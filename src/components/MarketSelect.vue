@@ -12,7 +12,7 @@
     </div>
 </template>
 <script setup>
-import store from '../vuex'
+import store from '../store'
 
 function setMarketType(market) {
     store.commit('setMarket', { market });

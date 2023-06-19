@@ -40,7 +40,7 @@
     </div> -->
 
     <div class="mt-5 w-full px-2">
-      <button class="w-full btn bg-green-500">Place Order</button>
+      <button class="w-full btn bg-green-500" @click="onPlaceOrder">Place Order</button>
     </div>
   </div>
 </template>
@@ -49,6 +49,7 @@
 import OrderType from "./OrderTypeSelect.vue";
 import Asset from "./Asset.vue";
 import { ref, onMounted } from "vue";
+import { placeOrder } from "../api"
 const buy = ref(null);
 const sell = ref(null);
 
@@ -61,6 +62,17 @@ const onSideClick = (side) => {
     sell.value.classList.add("tab-active");
   }
 };
+
+const onPlaceOrder = async () => {
+  let ret = await placeOrder({
+    'marketId': "BTC-USDT",
+    'price': "100",
+    'qty': "1",
+    'orderType': 'limit'
+  })
+
+};
+
 </script>
 <style scoped>
 /* .input-group :first-child {

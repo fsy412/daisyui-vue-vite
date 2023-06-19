@@ -23,7 +23,7 @@
 <script setup>
 import { watch, ref, reactive } from 'vue'
 import { useStore } from 'vuex'
-import store_ from '../vuex'
+import store_ from '../store'
 const store = useStore();
 watch(() => store.getters.market, () => {
     console.log('Asset changes detected', store.getters.market);

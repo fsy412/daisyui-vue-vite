@@ -27,7 +27,7 @@
 </template>
 
 <script>
-import { klines } from '../api/api.js'
+import { kline } from '../api'
 const CONTAINER_ID = 'vue-trading-view'
 
 export default {

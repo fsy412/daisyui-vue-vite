@@ -1,6 +1,8 @@
 import { createStore } from "vuex";
+import wallet from "./wallet";
 
 export const store = createStore({
+  modules: [wallet],
   state() {
     return {
       orderType: "limit",
@@ -20,15 +22,11 @@ export const store = createStore({
   mutations: {
     setOrderType(state, payload) {
       state.orderType = payload.orderType;
-      console.log("store", state.orderType);
     },
     setMarket(state, payload) {
-      console.log("store setMarket", payload);
       let market = payload.market;
       state.market = market;
-
       let arr = market.split("-");
-      console.log("arr", arr);
       state.baseToken = arr[0];
       state.quoteToken = arr[1];
     },

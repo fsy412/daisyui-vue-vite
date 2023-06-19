@@ -1,12 +1,12 @@
 import axios from "axios";
 
-const BaseUrl = 'http://127.0.0.1:5000/api/'
+const BaseUrl = 'http://127.0.0.1:5050/api/'
 
 // create an axios instance
 const service = axios.create({
-  baseURL: BaseUrl, // url = base url + request url
+  baseURL: BaseUrl,
   //timeout: 5000 // request timeout
-  timeout: 500000, // request timeout
+  timeout: 50000, // request timeout
 });
 
 // request interceptor

@@ -31,8 +31,29 @@
     </div>
 </template>
 
-<script>
-export default {};
+<script setup >
+import { ref, onMounted, onUnmounted } from "vue";
+
+import { orderbook } from "../api"
+
+const timer = ref()
+
+onMounted(() => {
+    timer.value = setInterval(async () => {
+        // do something
+        console.log('tick')
+        let ret = await orderbook({
+            "marketID": "BTC-USDT"
+        })
+        console.log('ret', ret)
+        console.log( JSON.parse(ret))
+    }, 1500)
+})
+
+onUnmounted(() => {
+    clearInterval(timer.value)
+    timer.value = ""
+})
 </script>
 
 <style scoped>

@@ -1,27 +1,41 @@
-import { https } from "axios";
+import request from '../utils/axios'
 
-export const BASE_URL = "https://api.huobi.pro";
-
-export const API_URL = {
-  common_symbols: "/v1/common/symbols",
-  history_kline: "/market/history/kline",
-};
-
-export async function apiGet(url, params, config) {
-  let _url = API_URL[url];
-  _url = _url ? `${BASE_URL}${_url}` : url;
-  _url = params ? _url + params : _url;
-  const res = await https.get(_url, config).catch(() => {
-    return;
-  });
-  return res ? res.data : void 0;
+export function placeOrder(data) {
+    return request({
+        url: '/order/place',
+        method: 'post',
+        data
+    })
 }
 
-export async function apiPost(url, params, config) {
-  let _url = API_URL[url];
-  _url = _url ? `${BASE_URL}${_url}` : url;
-  const res = await https.post(_url, params, config).catch(() => {
-    return;
-  });
-  return res ? res.data : void 0;
+export function cancelOrder(data) {
+    return request({
+        url: '/order/cancel',
+        method: 'post',
+        data
+    })
+}
+
+export function openOrder(data) {
+    return request({
+        url: '/order/open',
+        method: 'post',
+        data
+    })
+}
+
+export function orderbook(data) {
+    return request({
+        url: '/orderbook',
+        method: 'post',
+        data
+    })
+}
+
+export function kline(data) {
+    return request({
+        url: '/kline',
+        method: 'post',
+        data
+    })
 }

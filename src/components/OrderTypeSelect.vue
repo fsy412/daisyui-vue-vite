@@ -17,7 +17,7 @@
     </div>
 </template>
 <script setup>
-import store from '../vuex'
+import store from '../store'
 
 function setOrderType(orderType) {
     store.commit('setOrderType', { orderType });
