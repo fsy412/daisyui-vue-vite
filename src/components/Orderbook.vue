@@ -8,16 +8,16 @@
 
     <div v-for="(order, index) in askOrders_" :key="index" class="relative h-[18px] w-full bg-red-600 text-xs mb-0.5">
       <div class="relative flex h-[18px] items-center justify-center bg" :style="{ width: 100 - (+order.volume / totalVolume_) * 100 + '%' }">
-        <span class="absolute left-2 text-white">{{ order.price }}</span>
+        <span class="absolute left-2 text-white">{{ (+order.price).toFixed(3) }}</span>
       </div>
-      <span class="absolute right-0.5 top-0 text-white">{{ order.volume }}</span>
+      <span class="absolute right-0.5 top-0 text-white">{{ (+order.volume).toFixed(2) }}</span>
     </div>
     <div class="mb-1 text-center text-base font-medium text-blue-700 dark:text-blue-500">Spread</div>
     <div v-for="(order, index) in bidOrders_" :key="index" class="relative h-[18px] w-full bg-green-500 text-xs mb-0.5">
       <div class="relative flex h-[18px] items-center justify-center bg" :style="{ width: 100 - (+order.volume / totalVolume_) * 100 + '%' }">
-        <span class="absolute left-2 text-white">{{ order.price }}</span>
+        <span class="absolute left-2 text-white">{{ (+order.price).toFixed(3) }}</span>
       </div>
-      <span class="absolute right-0.5 top-0 text-white">{{ order.volume }}</span>
+      <span class="absolute right-0.5 top-0 text-white">{{ (+order.volume).toFixed(2) }}</span>
     </div>
   </div>
 </template>
