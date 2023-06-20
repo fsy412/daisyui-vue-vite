@@ -2,33 +2,21 @@
   <div class="tabs text-gray-300 md:w-1/5 2xl:w-[15%] flex flex-col justify-start p-1">
     <span class="w-full">Order Book</span>
     <div class="w-full justify-between flex text-sm text-gray-500">
-      <span>Amount</span>
       <span>Size</span>
+      <span>Price</span>
     </div>
-    <div class="relative h-[18px] w-full bg-red-600 text-xs">
-      <div class="relative flex h-[18px] items-center justify-center bg" style="width: 70%">
-        <span class="absolute left-0 text-white">1200</span>
+    <div v-for="(order, index) in askOrders_" :key="index" class="relative h-[18px] w-full bg-red-600 text-xs">
+      <div class="relative flex h-[18px] items-center justify-center bg" :style="{ width: (+order.volume / +totalVolume_) * 100 + '%' }">
+        <span class="absolute left-0 text-white">{{ order.volume }}</span>
       </div>
-      <span class="absolute right-0.5 top-0 text-white">200</span>
-    </div>
-    <div class="relative mt-[1px] h-[18px] w-full bg-red-600 text-xs">
-      <div class="relative flex h-[18px] justify-center bg" style="width: 90%">
-        <span class="absolute left-0 text-white">1200</span>
-      </div>
-      <span class="absolute right-0.5 top-0 text-white">10</span>
+      <span class="absolute right-0.5 top-0 text-white">{{ order.price }}</span>
     </div>
     <div class="mb-1 text-center text-base font-medium text-blue-700 dark:text-blue-500">Spread</div>
-    <div class="relative h-[18px] w-full bg-green-500 text-xs">
-      <div class="relative flex h-[18px] items-center justify-center bg" style="width: 90%">
-        <span class="absolute left-0 text-white">1200</span>
+    <div v-for="(order, index) in bidOrders_" :key="index" class="relative h-[18px] w-full bg-green-500 text-xs">
+      <div class="relative flex h-[18px] items-center justify-center bg" :style="{ width: 100 - (+order.volume / totalVolume_) * 100 + '%' }">
+        <span class="absolute left-0 text-white">{{ order.volume }}</span>
       </div>
-      <span class="absolute right-0.5 top-0 text-white">200</span>
-    </div>
-    <div class="relative mt-[1px] h-[18px] w-full bg-green-500 text-xs">
-      <div class="relative flex h-[18px] justify-center bg" style="width: 20%">
-        <span class="absolute left-0 text-white">1200</span>
-      </div>
-      <span class="absolute right-0.5 top-0 text-white">10</span>
+      <span class="absolute right-0.5 top-0 text-white">{{ order.price }}</span>
     </div>
   </div>
 </template>
@@ -37,6 +25,9 @@
 import { ref, onMounted, onUnmounted } from "vue"
 import { orderbook } from "../api"
 const timer = ref()
+const bidOrders_ = ref([])
+const askOrders_ = ref([])
+const totalVolume_ = ref(0)
 
 onMounted(() => {
   timer.value = setInterval(async () => {
@@ -45,8 +36,34 @@ onMounted(() => {
     let ret = await orderbook({
       marketID: "BTC-USDT",
     })
-    // console.log('ret', ret)
-    // console.log( JSON.parse(ret))
+
+    let book = JSON.parse(ret)
+    // console.log("book", book)
+    let bids = book.bids
+    let asks = book.asks
+
+    let totalVolume = 0
+
+    // ----- bid -----
+    let bidOrders = []
+    Object.keys(bids.prices).map((price) => {
+      bidOrders.push(bids.prices[price])
+      totalVolume += +bids.prices[price].volume
+    })
+    bidOrders_.value = bidOrders.reverse()
+    console.log("bidOrders", bidOrders)
+    //  console.log(" ", bidOrders_.value)
+
+    // ----- ask -----
+    let askOrders = []
+    Object.keys(asks.prices).map((price) => {
+      console.log(asks.prices[price])
+      askOrders.push(asks.prices[price])
+    })
+    askOrders_.value = askOrders
+
+    console.log("askOrders", askOrders, totalVolume)
+    totalVolume_.value = totalVolume
   }, 1500)
 })
 

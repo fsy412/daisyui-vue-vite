@@ -72,6 +72,7 @@ import store from "../store"
 
 const buy = ref(null)
 const sell = ref(null)
+const orderSide = ref("")
 
 // import { defineEmits, defineProps } from 'vue';
 // const props = defineProps({
@@ -103,17 +104,19 @@ const onSideClick = (side) => {
   if (side == "buy") {
     sell.value.classList.remove("tab-active")
     buy.value.classList.add("tab-active")
+    orderSide.value = "buy"
   } else {
     buy.value.classList.remove("tab-active")
     sell.value.classList.add("tab-active")
+    orderSide.value = "sell"
   }
 }
 
 const onPlaceOrder = async () => {
-  console.log("onPlaceOrder", price.value, amount.value)
-
-  let ret = await placeOrder({
+  console.log("onPlaceOrder", price.value, amount.value, orderSide.value)
+  await placeOrder({
     marketId: "BTC-USDT",
+    side: orderSide.value == "buy" ? 0 : 1,
     price: +price.value,
     qty: +amount.value,
     orderType: "limit",

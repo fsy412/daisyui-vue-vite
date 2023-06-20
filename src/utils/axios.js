@@ -1,31 +1,31 @@
-import axios from "axios";
+import axios from "axios"
 
-const BaseUrl = 'http://127.0.0.1:5050/api/'
+const BaseUrl = "http://127.0.0.1:5050/api/"
 
 // create an axios instance
 const service = axios.create({
   baseURL: BaseUrl,
   //timeout: 5000 // request timeout
   timeout: 50000, // request timeout
-});
+})
 
 // request interceptor
 service.interceptors.request.use(
   (config) => {
-    return config;
+    return config
   },
   (error) => {
-    console.log(error); // for debug
-    return Promise.reject(error);
-  }
-);
+    console.log(error) // for debug
+    return Promise.reject(error)
+  },
+)
 
 // response interceptor
 service.interceptors.response.use(
   (response) => {
-    const res = response.data;
-    if (res.code !== 20000) {
-      console.error("http return ", res);
+    const res = response.data
+    if (res.code != 0) {
+      console.error("http return ", res)
       createToast(
         { title: "", description: res.desc },
         {
@@ -33,17 +33,17 @@ service.interceptors.response.use(
           showIcon: true,
           position: "top-center",
           timeout: 8000,
-        }
-      );
-      return Promise.reject(new Error(res.message || "Error"));
+        },
+      )
+      return Promise.reject(new Error(res.message || "Error"))
     } else {
-      return res.data;
+      return res.data
     }
   },
   (error) => {
-    console.error("response err" + error); // for debug
-    return Promise.reject(error);
-  }
-);
+    console.error("response err" + error) // for debug
+    return Promise.reject(error)
+  },
+)
 
-export default service;
+export default service
