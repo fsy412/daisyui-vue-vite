@@ -6,7 +6,7 @@
         <a class="text-center w-full flex flex-row justify-center" @click="handleClick('BTC-USDT')">BTC-USDT</a>
       </li>
       <li>
-        <a class="text-center w-full flex flex-row justify-center" @click="handleClick('BNB-USDT')">BNB-USDT</a>
+        <a class="text-center w-full flex flex-row justify-center" @click="handleClick('FTM-USDT')">FTM-USDT</a>
       </li>
     </ul>
   </div>

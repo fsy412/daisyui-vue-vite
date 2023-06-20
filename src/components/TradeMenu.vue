@@ -72,7 +72,7 @@ import store from "../store"
 
 const buy = ref(null)
 const sell = ref(null)
-const orderSide = ref("")
+const orderSide = ref("buy")
 
 // import { defineEmits, defineProps } from 'vue';
 // const props = defineProps({
