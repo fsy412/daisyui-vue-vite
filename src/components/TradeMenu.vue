@@ -68,12 +68,18 @@
 </template>
 
 <script setup>
+import { ethers } from "ethers"
+import { ref, onMounted, computed } from "vue"
 import OrderType from "./OrderTypeSelect.vue"
 import Asset from "./Asset.vue"
-import { ref, onMounted, computed } from "vue"
 import { placeOrder } from "../api"
 import store from "../store"
 import ConnectWallet from "./ConnectWallet.vue"
+import { ORDER } from "../constants/orderbook"
+import { getPermitSignature } from "../utils/sign"
+
+import getExchangeContract from "../contract/exchange"
+import getERC20 from "../contract/erc20"
 
 const buy = ref(null)
 const sell = ref(null)
@@ -118,15 +124,34 @@ const onSideClick = (side) => {
 }
 
 const onPlaceOrder = async () => {
-  console.log("onPlaceOrder", price.value, amount.value, orderSide.value)
-  await placeOrder({
+  let side = orderSide.value == "buy" ? 0 : 1
+  let qty = +amount.value
+  let price_ = +price.value
+  console.log("onPlaceOrder", side, price_, amount, side, orderSide.value)
+  let ret = await placeOrder({
     address: store.getters.account,
     marketId: store.getters.market,
-    side: orderSide.value == "buy" ? 0 : 1,
-    price: +price.value,
-    qty: +amount.value,
+    side: side,
+    price: price_,
+    qty: qty,
     orderType: "limit",
   })
+  console.log("111", ret)
+
+  if (ret.matchResult == ORDER.Posted) {
+    console.log("call contract createOrder", side, price_, qty)
+    const exchangeContract = getExchangeContract()
+    const { ethereum } = window
+    const provider = new ethers.providers.Web3Provider(ethereum)
+    const signer = provider.getSigner()
+    const token = getERC20("0x2c6Ff2Dec3c6e6c1EF241bA48F33C7F3aC5cc1ED")
+    const amount_ = ethers.utils.parseEther(amount.value)
+    const deadline = 2656860541
+    const { v, r, s } = await getPermitSignature(signer, store.getters.account, token, exchangeContract.address, amount_, deadline)
+
+    const tx = await exchangeContract.createOrderWithPermit(side, price_, qty, amount_, deadline, v, r, s)
+    await tx.wait()
+  }
 }
 </script>
 <style scoped>

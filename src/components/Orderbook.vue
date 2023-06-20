@@ -43,7 +43,7 @@ onMounted(() => {
       })
 
       let book = JSON.parse(ret)
-      console.log("book", book)
+      // console.log("book", book)
       let bids = book.bids
       let asks = book.asks
 
