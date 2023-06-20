@@ -1,7 +1,3 @@
-<script setup>
-import store from "../store"
-</script>
-
 <template>
   <div>
     <!-- NavBar / Header -->
@@ -55,12 +51,6 @@ import store from "../store"
   </div>
 </template>
 
-<script>
-export default {
-  data() {
-    return {
-      showMenu: false,
-    }
-  },
-}
+<script setup>
+import store from "../store"
 </script>

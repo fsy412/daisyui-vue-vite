@@ -1,8 +1,6 @@
 import { createStore } from "vuex";
 import network from "./network";
 
-console.log("1111", network);
-
 export default createStore({
   state() {
     return {
