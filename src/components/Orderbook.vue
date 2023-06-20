@@ -6,7 +6,7 @@
       <span>Price</span>
     </div>
     <div v-for="(order, index) in askOrders_" :key="index" class="relative h-[18px] w-full bg-red-600 text-xs">
-      <div class="relative flex h-[18px] items-center justify-center bg" :style="{ width: (+order.volume / +totalVolume_) * 100 + '%' }">
+      <div class="relative flex h-[18px] items-center justify-center bg" :style="{ width: (+order.volume / totalVolume_) * 100 + '%' }">
         <span class="absolute left-0 text-white">{{ order.volume }}</span>
       </div>
       <span class="absolute right-0.5 top-0 text-white">{{ order.price }}</span>
