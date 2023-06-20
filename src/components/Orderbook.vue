@@ -1,6 +1,10 @@
 <template>
   <div class="tabs text-gray-300 md:w-1/5 2xl:w-[15%] flex flex-col justify-start p-1">
     <span class="w-full">Order Book</span>
+    <div class="w-full justify-between flex text-sm text-gray-500">
+      <span>Amount</span>
+      <span>Size</span>
+    </div>
     <div class="relative h-[18px] w-full bg-red-600 text-xs">
       <div class="relative flex h-[18px] items-center justify-center bg" style="width: 70%">
         <span class="absolute left-0 text-white">1200</span>
@@ -31,9 +35,7 @@
 
 <script setup>
 import { ref, onMounted, onUnmounted } from "vue"
-
 import { orderbook } from "../api"
-
 const timer = ref()
 
 onMounted(() => {
