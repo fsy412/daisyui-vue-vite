@@ -8,7 +8,6 @@
           fill="#202020"
         ></path>
       </svg>
-
       Connect Wallet</label
     >
 

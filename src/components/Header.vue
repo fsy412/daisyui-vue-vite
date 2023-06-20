@@ -59,9 +59,6 @@
 import ConnectWallet from "./ConnectWallet.vue"
 import DisconnectWallet from "./DisconnectWallet.vue"
 import store from "../store"
-console.log("000000000000000")
-console.log(store.getters.account === "")
-console.log(store.state.locked, store.state.market)
 </script>
 
 <style></style>
