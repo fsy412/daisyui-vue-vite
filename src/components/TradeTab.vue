@@ -1,8 +1,8 @@
 <template>
   <div class="tabs tabs-boxed bg-neutral text-gray-200">
-    <a class="tab tab-active">Open Order</a>
-    <a class="tab text-gray-200">Order History</a>
-    <a class="tab text-gray-200">Trade History</a>
+    <a class="tab text-gray-200" :class="{ 'tab-active': tab == 1 }" @click="onTab(1)">Open Order</a>
+    <a class="tab text-gray-200" :class="{ 'tab-active': tab == 2 }" @click="onTab(2)">Order History</a>
+    <a class="tab text-gray-200" :class="{ 'tab-active': tab == 3 }" @click="onTab(3)">Trade History</a>
   </div>
   <div class="overflow-x-auto w-full">
     <table class="w-full">
@@ -15,7 +15,6 @@
           <th>Price</th>
           <th>Filled</th>
           <th>Time</th>
-
           <th>Operation</th>
         </tr>
       </thead>
@@ -35,6 +34,12 @@
   </div>
 </template>
 <script setup>
+import { ref } from "vue"
+const tab = ref(1)
+const onTab = (val) => {
+  console.log("onTab", val)
+  tab.value = val
+}
 const trades = [
   {
     Market: "BTC-USDT",
