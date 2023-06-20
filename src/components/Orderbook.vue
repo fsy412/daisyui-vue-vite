@@ -1,9 +1,9 @@
 <template>
   <div class="tabs text-gray-300 md:w-1/5 2xl:w-[15%] flex flex-col justify-start p-1">
     <span class="w-full">Order Book</span>
-    <div class="w-full justify-between flex text-sm text-gray-500">
-      <span>Price</span>
-      <span>Size</span>
+    <div class="w-full justify-between flex text-xs text-gray-500">
+      <span>Price({{ store.state.quoteToken }})</span>
+      <span>Size({{ store.state.baseToken }})</span>
     </div>
 
     <div v-for="(order, index) in askOrders_" :key="index" class="relative h-[18px] w-full bg-red-600 text-xs mb-0.5">
@@ -25,7 +25,11 @@
 <script setup>
 import { ref, onMounted, onUnmounted } from "vue"
 import { orderbook } from "../api"
-import store from "../store"
+// import store from "../store"
+import { useStore } from "vuex"
+
+const store = useStore()
+
 const timer = ref()
 const bidOrders_ = ref([])
 const askOrders_ = ref([])
@@ -35,7 +39,7 @@ onMounted(() => {
   timer.value = setInterval(async () => {
     try {
       let ret = await orderbook({
-        marketID: store.state.market,
+        marketID: store.getters.market,
       })
 
       let book = JSON.parse(ret)

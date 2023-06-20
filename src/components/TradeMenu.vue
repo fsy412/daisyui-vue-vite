@@ -1,7 +1,11 @@
 <template>
-  <div class="p-1 tabs text-gray-300 md:w-1/5 2xl:w-[15%] flex flex-col justify-start">
+  <div class="p-1 tabs text-gray-300 md:w-1/5 2xl:w-[15%] flex flex-col justify-start relative">
+    <div v-if="store.getters.account == ''" class="top-0 left-0 absolute h-full w-full flex flex-col justify-center items-center opacity-90 bg-[#18181b] z-10">
+      <span class="mb-3 font-bold">Please connect wallet to use</span>
+      <ConnectWallet class="z-20"></ConnectWallet>
+    </div>
     <div class="flex w-full flex-col">
-      <span class="text-left">Create Order</span>
+      <span class="text-left cursor-pointer">Create Order</span>
       <div class="tabs tabs-boxed bg-neutral text-gray-200">
         <a class="tab tab-active text-gray-200 w-1/2" @click="onSideClick('buy')" ref="buy">Buy</a>
         <a class="tab text-gray-200 w-1/2" @click="onSideClick('sell')" ref="sell">Sell</a>
@@ -58,7 +62,7 @@
     </div>
     <Asset></Asset>
     <div class="mt-5 w-full px-2">
-      <button class="w-full btn bg-green-500" @click="onPlaceOrder">Place Order</button>
+      <button class="w-full btn bg-green-500" :class="{ 'blur-sm': store.getters.account == '' }" @click="onPlaceOrder">Place Order</button>
     </div>
   </div>
 </template>
@@ -69,6 +73,7 @@ import Asset from "./Asset.vue"
 import { ref, onMounted, computed } from "vue"
 import { placeOrder } from "../api"
 import store from "../store"
+import ConnectWallet from "./ConnectWallet.vue"
 
 const buy = ref(null)
 const sell = ref(null)
@@ -115,7 +120,8 @@ const onSideClick = (side) => {
 const onPlaceOrder = async () => {
   console.log("onPlaceOrder", price.value, amount.value, orderSide.value)
   await placeOrder({
-    marketId: "BTC-USDT",
+    address: store.getters.account,
+    marketId: store.getters.market,
     side: orderSide.value == "buy" ? 0 : 1,
     price: +price.value,
     qty: +amount.value,
