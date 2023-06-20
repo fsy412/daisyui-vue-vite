@@ -64,7 +64,6 @@
 import { ref } from "vue"
 const tab = ref(1)
 const onTab = (val) => {
-  console.log("onTab", val)
   tab.value = val
 }
 const trades = [

@@ -66,7 +66,6 @@ import store from "../store"
 const onConnectWallet = () => {
   store.dispatch("connectNetwork")
   document.querySelector("#my_modal_6").checked = false
-  console.log(document.querySelector("#my_modal_6"))
 }
 </script>
 <style scoped>

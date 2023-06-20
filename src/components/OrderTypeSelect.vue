@@ -26,9 +26,7 @@ function setOrderType(orderType) {
 const handleClick = (orderType) => {
   setOrderType(orderType)
   const elem = document.activeElement
-  if (elem) {
-    elem?.blur()
-  }
+  elem?.blur()
 }
 </script>
 <style></style>
