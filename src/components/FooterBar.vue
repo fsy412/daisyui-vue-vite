@@ -1,5 +1,5 @@
 <template>
-  <div class="fixed bottom-0 w-full">
+  <div class="fixed bottom-0 w-full z-20">
     <footer class="mx-auto flex flex-row text-center items-center footer bg-neutral text-neutral-content">
       <div class="pl-2">
         <!-- <svg width="100%" height="22" viewBox="0 0 101 88" fill="none" xmlns="http://www.w3.org/2000/svg">
