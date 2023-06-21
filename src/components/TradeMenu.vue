@@ -20,14 +20,14 @@
           <div class="input-group">
             <span class="rounded-none bg-neutral text-gray-300 w-[80px]">Price</span>
             <input type="text" placeholder="0.0" class="input input-bordered h-8 w-28 rounded-none bg-neutral" v-model="price" />
-            <span class="w-20 rounded-none bg-neutral">USD</span>
+            <span class="w-20 rounded-none bg-neutral">{{store.getters.quoteToken}}</span>
           </div>
         </div>
         <div class="form-control rounded-none bg-neutral">
           <div class="input-group">
             <span class="rounded-none bg-neutral text-gray-300 w-[80px]">Amount</span>
             <input type="text" placeholder="0.0" class="input input-bordered h-8 w-28 rounded-none bg-neutral" v-model="amount" />
-            <span class="w-20 rounded-none bg-neutral">USD</span>
+            <span class="w-20 rounded-none bg-neutral">{{store.getters.baseToken}}</span>
           </div>
         </div>
       </div>
@@ -77,9 +77,9 @@ import store from "../store"
 import ConnectWallet from "./ConnectWallet.vue"
 import { ORDER } from "../constants/orderbook"
 import { getPermitSignature } from "../utils/sign"
-
 import getExchangeContract from "../contract/exchange"
-import getERC20 from "../contract/erc20"
+import getERC20Contract from "../contract/erc20"
+import { getERC20Address } from "../utils/address"
 
 const buy = ref(null)
 const sell = ref(null)
@@ -136,20 +136,19 @@ const onPlaceOrder = async () => {
     qty: qty,
     orderType: "limit",
   })
-  console.log("111", ret)
+  console.log("placeOrder ==>", ret)
 
   if (ret.matchResult == ORDER.Posted) {
     console.log("call contract createOrder", side, price_, qty)
-    const exchangeContract = getExchangeContract()
     const { ethereum } = window
     const provider = new ethers.providers.Web3Provider(ethereum)
     const signer = provider.getSigner()
-    const token = getERC20("0x2c6Ff2Dec3c6e6c1EF241bA48F33C7F3aC5cc1ED")
-    const amount_ = ethers.utils.parseEther(amount.value)
+    const erc20 = getERC20Contract(getERC20Address(store.getters.baseToken, store.getters.chainId))
+    const amountHuge = ethers.utils.parseEther(amount.value)
     const deadline = 2656860541
-    const { v, r, s } = await getPermitSignature(signer, store.getters.account, token, exchangeContract.address, amount_, deadline)
-
-    const tx = await exchangeContract.createOrderWithPermit(side, price_, qty, amount_, deadline, v, r, s)
+    const { v, r, s } = await getPermitSignature(signer, store.getters.account, erc20, exchangeContract.address, amountHuge, deadline, store.getters.chainId)
+    const exchangeContract = getExchangeContract()
+    const tx = await exchangeContract.createOrderWithPermit(side, price_, amountHuge, amountHuge, deadline, v, r, s)
     await tx.wait()
   }
 }

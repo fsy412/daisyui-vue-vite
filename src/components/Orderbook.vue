@@ -25,11 +25,9 @@
 <script setup>
 import { ref, onMounted, onUnmounted } from "vue"
 import { orderbook } from "../api"
-// import store from "../store"
 import { useStore } from "vuex"
 
 const store = useStore()
-
 const timer = ref()
 const bidOrders_ = ref([])
 const askOrders_ = ref([])

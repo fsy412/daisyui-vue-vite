@@ -46,9 +46,8 @@ const onDisconnect = () => {
 const clearAccount = () => {
   store.commit("clearAccount", {})
 }
-
 onMounted(() => {
-  console.log("disconnect wallet component")
+  
 })
 </script>
 <style scoped>

@@ -59,6 +59,17 @@
 import ConnectWallet from "./ConnectWallet.vue"
 import DisconnectWallet from "./DisconnectWallet.vue"
 import store from "../store"
+import { watch } from "vue"
+
+watch(
+  () => store.getters.account,
+  () => {
+    if (store.getters.account != "") {
+      console.log("wallet connected", store.getters.account, store.getters.market, store.getters.chainId)
+      store.dispatch("updateMarket", { market: store.getters.market, account: store.getters.account, chainId: store.getters.chainId })
+    }
+  },
+)
 </script>
 
 <style></style>

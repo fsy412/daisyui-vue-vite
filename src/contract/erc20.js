@@ -1,7 +1,7 @@
 import { ethers } from "ethers"
 import abi from "../abi/FaucetToken.json"
 
-function getERC20(erc20Address) {
+function getERC20Contract(erc20Address) {
   const { ethereum } = window
   const provider = new ethers.providers.Web3Provider(ethereum)
   const signer = provider.getSigner()
@@ -9,4 +9,4 @@ function getERC20(erc20Address) {
   return contract
 }
 
-export default getERC20
+export default getERC20Contract

@@ -1,5 +1,5 @@
-async function getPermitSignature(signer, singerAddress, token, spender, value, deadline) {
-  const [nonce, name, version, chainId] = await Promise.all([token.nonces(singerAddress), token.name(), "1", 4002])
+async function getPermitSignature(signer, singerAddress, token, spender, value, deadline, chainId) {
+  const [nonce, name, version] = await Promise.all([token.nonces(singerAddress), token.name(), "1"])
 
   let ret = await signer._signTypedData(
     {
