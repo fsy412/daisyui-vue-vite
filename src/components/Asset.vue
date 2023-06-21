@@ -22,7 +22,7 @@
 <script setup>
 import { watch, ref, reactive } from "vue"
 import { useStore } from "vuex"
-import { onMounted } from "vue";
+import { onMounted } from "vue"
 const store = useStore()
 watch(
   () => store.getters.market,

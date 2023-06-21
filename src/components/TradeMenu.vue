@@ -20,14 +20,14 @@
           <div class="input-group">
             <span class="rounded-none bg-neutral text-gray-300 w-[80px]">Price</span>
             <input type="text" placeholder="0.0" class="input input-bordered h-8 w-28 rounded-none bg-neutral" v-model="price" />
-            <span class="w-20 rounded-none bg-neutral">{{store.getters.quoteToken}}</span>
+            <span class="w-20 rounded-none bg-neutral">{{ store.getters.quoteToken }}</span>
           </div>
         </div>
         <div class="form-control rounded-none bg-neutral">
           <div class="input-group">
             <span class="rounded-none bg-neutral text-gray-300 w-[80px]">Amount</span>
             <input type="text" placeholder="0.0" class="input input-bordered h-8 w-28 rounded-none bg-neutral" v-model="amount" />
-            <span class="w-20 rounded-none bg-neutral">{{store.getters.baseToken}}</span>
+            <span class="w-20 rounded-none bg-neutral">{{ store.getters.baseToken }}</span>
           </div>
         </div>
       </div>
@@ -62,7 +62,8 @@
     </div>
     <Asset></Asset>
     <div class="mt-5 w-full px-2">
-      <button class="w-full btn bg-green-500" :class="{ 'blur-sm': store.getters.account == '' }" @click="onPlaceOrder">Place Order</button>
+      <button v-if="store.getters.quoteAllowance == 0" class="w-full btn bg-green-500" :class="{ 'blur-sm': store.getters.account == '' }" @click="onUnlockQuoteToken()">Unlock {{ store.getters.quoteToken }}</button>
+      <button v-else class="w-full btn bg-green-500" :class="{ 'blur-sm': store.getters.account == '' }" @click="onPlaceOrder">Place Order</button>
     </div>
   </div>
 </template>
@@ -79,7 +80,7 @@ import { ORDER } from "../constants/orderbook"
 import { getPermitSignature } from "../utils/sign"
 import getExchangeContract from "../contract/exchange"
 import getERC20Contract from "../contract/erc20"
-import { getERC20Address } from "../utils/address"
+import { getERC20Address, getExchangeAddress } from "../utils/address"
 
 const buy = ref(null)
 const sell = ref(null)
@@ -125,9 +126,10 @@ const onSideClick = (side) => {
 
 const onPlaceOrder = async () => {
   let side = orderSide.value == "buy" ? 0 : 1
-  let qty = +amount.value
-  let price_ = +price.value
-  console.log("onPlaceOrder", side, price_, amount, side, orderSide.value)
+
+  let qty = Number(amount.value)
+  let price_ = Number(price.value)
+  console.log("onPlaceOrder", orderSide.value, side, price_, qty)
   let ret = await placeOrder({
     address: store.getters.account,
     marketId: store.getters.market,
@@ -146,11 +148,31 @@ const onPlaceOrder = async () => {
     const erc20 = getERC20Contract(getERC20Address(store.getters.baseToken, store.getters.chainId))
     const amountHuge = ethers.utils.parseEther(amount.value)
     const deadline = 2656860541
-    const exchangeContract = getExchangeContract()
+    const exchangeContract = getExchangeContract(getExchangeAddress(store.getters.chainId))
     const { v, r, s } = await getPermitSignature(signer, store.getters.account, erc20, exchangeContract.address, amountHuge, deadline, store.getters.chainId)
     const tx = await exchangeContract.createOrderWithPermit(side, price_, amountHuge, amountHuge, deadline, v, r, s)
     await tx.wait()
+  } else if (ret.matchResult == ORDER.Filled) {
+    const makers = ret.match.makers
+    console.log("call contract executeOrder", side, price_, qty, makers)
+    const { ethereum } = window
+    const provider = new ethers.providers.Web3Provider(ethereum)
+    const signer = provider.getSigner()
+    const erc20 = side == 0 ? getERC20Contract(getERC20Address(store.getters.quoteToken, store.getters.chainId)) : getERC20Contract(getERC20Address(store.getters.baseToken, store.getters.chainId))
+
+    console.log(erc20.address)
+    const amountHuge = ethers.utils.parseEther(amount.value)
+    const deadline = 2656860541
+    const exchangeContract = getExchangeContract(getExchangeAddress(store.getters.chainId))
+    const { v, r, s } = await getPermitSignature(signer, store.getters.account, erc20, exchangeContract.address, amountHuge, deadline, store.getters.chainId)
+    const tx = await exchangeContract.executeOrderWithPermit(makers, side, price_, amountHuge, amountHuge, deadline, v, r, s)
+    await tx.wait()
   }
+}
+
+const onUnlockQuoteToken = async () => {
+  const erc20 = getERC20Contract(getERC20Address(store.getters.quoteToken, store.getters.chainId))
+  await erc20.approve(getExchangeAddress(store.getters.chainId), ethers.utils.parseEther("100"))
 }
 </script>
 <style scoped>

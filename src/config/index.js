@@ -8,7 +8,7 @@ const config = {
     250: { BTC: "", USDT: "", FTM: "" },
   },
   Exchange: {
-    4002: "0x23233dBeBF1019e3e0f47aC37B3B458F56cd499E",
+    4002: "0x993B6B48d3eB236E7ee46B398997fbD784FF756d",
     250: "",
   },
 }

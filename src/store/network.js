@@ -22,24 +22,24 @@ export default {
         const signer = provider.getSigner()
 
         // check network
-        // if (chainId != CONFIG.ChainId) {
-        //   ethereum.request({
-        //     method: "wallet_addEthereumChain",
-        //     params: [
-        //       {
-        //         chainId: `0x${Number(4002).toString(16)}`,
-        //         rpcUrls: ["https://testnet.ftmscan.com"],
-        //         chainName: "Fantom Testnet",
-        //         nativeCurrency: {
-        //           name: "FTM",
-        //           symbol: "FTM",
-        //           decimals: 18,
-        //         },
-        //         blockExplorerUrls: ["https://testnet.ftmscan.com/"],
-        //       },
-        //     ],
-        //   });
-        // }
+        if (chainId != 4002) {
+          ethereum.request({
+            method: "wallet_addEthereumChain",
+            params: [
+              {
+                chainId: `0x${Number(4002).toString(16)}`,
+                rpcUrls: ["https://rpc.testnet.fantom.network"],
+                chainName: "Fantom Testnet",
+                nativeCurrency: {
+                  name: "FTM",
+                  symbol: "FTM",
+                  decimals: 18,
+                },
+                blockExplorerUrls: ["https://testnet.ftmscan.com/"],
+              },
+            ],
+          })
+        }
 
         const account = (await ethereum.request({ method: "eth_requestAccounts" }))[0]
         state.account = account

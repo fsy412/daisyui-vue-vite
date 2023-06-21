@@ -2,7 +2,7 @@ import { createStore } from "vuex"
 import network from "./network"
 import { ethers } from "ethers"
 
-import { getWalletBalance } from "../utils/balance"
+import { getWalletBalance, getQuoteAllowance } from "../utils/balance"
 
 export default createStore({
   state() {
@@ -15,6 +15,7 @@ export default createStore({
       quoteWalletAmount: 0,
       baseExchangeAmount: 0,
       quoteExchangeAmount: 0,
+      quoteAllowance: 0,
     }
   },
 
@@ -28,6 +29,8 @@ export default createStore({
 
       state.baseWalletAmount = Number(ethers.utils.formatEther(await getWalletBalance(payload.account, arr[0], payload.chainId))).toFixed(3)
       state.quoteWalletAmount = Number(ethers.utils.formatEther(await getWalletBalance(payload.account, arr[1], payload.chainId))).toFixed(3)
+      state.quoteAllowance = Number(ethers.utils.formatEther(await getQuoteAllowance(payload.account, arr[1], payload.chainId))).toFixed(3)
+      console.log(state.quoteAllowance)
     },
   },
   getters: {
@@ -38,6 +41,7 @@ export default createStore({
     quoteWalletAmount: (state) => state.quoteWalletAmount,
     baseExchangeAmount: (state) => state.baseExchangeAmount,
     quoteExchangeAmount: (state) => state.quoteExchangeAmount,
+    quoteAllowance: (state) => state.quoteAllowance,
   },
   mutations: {
     setOrderType(state, payload) {
