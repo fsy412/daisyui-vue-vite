@@ -146,8 +146,8 @@ const onPlaceOrder = async () => {
     const erc20 = getERC20Contract(getERC20Address(store.getters.baseToken, store.getters.chainId))
     const amountHuge = ethers.utils.parseEther(amount.value)
     const deadline = 2656860541
-    const { v, r, s } = await getPermitSignature(signer, store.getters.account, erc20, exchangeContract.address, amountHuge, deadline, store.getters.chainId)
     const exchangeContract = getExchangeContract()
+    const { v, r, s } = await getPermitSignature(signer, store.getters.account, erc20, exchangeContract.address, amountHuge, deadline, store.getters.chainId)
     const tx = await exchangeContract.createOrderWithPermit(side, price_, amountHuge, amountHuge, deadline, v, r, s)
     await tx.wait()
   }

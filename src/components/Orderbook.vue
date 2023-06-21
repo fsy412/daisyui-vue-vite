@@ -51,7 +51,7 @@ onMounted(() => {
       let bidOrders = []
       Object.keys(bids.prices).map((price) => {
         bidOrders.push(bids.prices[price])
-        totalVolume += +bids.prices[price].volume
+        totalVolume += Number(bids.prices[price].volume)
       })
       bidOrders_.value = bidOrders.reverse()
 
@@ -59,7 +59,7 @@ onMounted(() => {
       let askOrders = []
       Object.keys(asks.prices).map((price) => {
         askOrders.push(asks.prices[price])
-        totalVolume += +asks.prices[price].volume
+        totalVolume += Number(asks.prices[price].volume)
       })
       askOrders_.value = askOrders.reverse()
       totalVolume_.value = totalVolume
