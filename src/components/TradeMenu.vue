@@ -6,7 +6,7 @@
     </div>
     <div class="flex w-full flex-col">
       <span class="text-left cursor-pointer">Create Order</span>
-      <div class="tabs tabs-boxed bg-neutral text-gray-200 rounded-sm">
+      <div class="tabs tabs-boxed bg-neutral text-gray-200 rounded-md">
         <a class="tab tab-active text-gray-200 w-1/2 rounded-sm" @click="onSideClick('buy')" ref="buy">Buy</a>
         <a class="tab text-gray-200 w-1/2 rounded-sm" @click="onSideClick('sell')" ref="sell">Sell</a>
       </div>
@@ -37,14 +37,14 @@
           <div class="input-group">
             <span class="rounded-sm bg-neutral text-gray-300 w-[80px]">Price</span>
             <input type="text" placeholder="0.0" class="input input-bordered h-8 w-28 rounded-sm bg-neutral" v-model="price" />
-            <span class="w-20 rounded-sm bg-neutral">USD</span>
+            <span class="w-20 rounded-sm bg-neutral">{{ store.getters.quoteToken }}</span>
           </div>
         </div>
         <div class="form-control rounded-sm bg-neutral mt-2">
           <div class="input-group">
             <span class="rounded-sm bg-neutral text-gray-300 w-[80px]">Amount</span>
             <input type="text" placeholder="0.0" class="input input-bordered h-8 w-28 rounded-sm bg-neutral" v-model="amount" />
-            <span class="w-20 rounded-sm bg-neutral">USD</span>
+            <span class="w-20 rounded-sm bg-neutral">{{ store.getters.baseToken }}</span>
           </div>
         </div>
       </div>
