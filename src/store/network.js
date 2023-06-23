@@ -54,6 +54,9 @@ export default {
     clearAccount(state) {
       state.account = ""
     },
+    setNetwork(state, payload) {
+      state.chainId = payload.chainId
+    },
   },
   getters: {
     account: (state) => state.account,

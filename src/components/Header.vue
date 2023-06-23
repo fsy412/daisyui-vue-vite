@@ -45,22 +45,30 @@
       </ul>
     </div>
     <div class="navbar-end">
-      <div v-if="store.getters.account == ''">
-        <ConnectWallet></ConnectWallet>
+      <div v-if="chainId_ == 4002">
+        <div v-if="store.getters.account == ''">
+          <ConnectWallet></ConnectWallet>
+        </div>
+        <div v-else>
+          <DisconnectWallet></DisconnectWallet>
+        </div>
       </div>
       <div v-else>
-        <DisconnectWallet></DisconnectWallet>
+        <WrongNetwork></WrongNetwork>
       </div>
     </div>
   </div>
 </template>
 
 <script setup>
+import { ethers } from "ethers"
 import ConnectWallet from "./ConnectWallet.vue"
 import DisconnectWallet from "./DisconnectWallet.vue"
+import WrongNetwork from "./WrongNetwork.vue"
 import store from "../store"
-import { watch } from "vue"
+import { ref, watch, onMounted, onUnmounted } from "vue"
 
+const chainId_ = ref(0)
 watch(
   () => store.getters.account,
   () => {
@@ -70,6 +78,38 @@ watch(
     }
   },
 )
+
+function onNetworkChange(chainId) {
+  store.commit("setNetwork", { chainId })
+}
+
+onMounted(() => {
+  const getChainId = async () => {
+    const { ethereum } = window
+    const provider = new ethers.providers.Web3Provider(ethereum)
+    const { chainId } = await provider.getNetwork()
+    chainId_.value = chainId
+  }
+
+  getChainId()
+
+  window.ethereum.on("chainChanged", async () => {
+    const { ethereum } = window
+    const provider = new ethers.providers.Web3Provider(ethereum)
+    const network = await provider.getNetwork()
+    chainId_.value = network.chainId
+    if (network.chainId == 4002) {
+      window.location.reload()
+    }
+
+    onNetworkChange(network.chainId)
+  })
+  window.ethereum.on("accountsChanged", () => {
+    // window.location.reload()
+  })
+})
+
+onUnmounted(() => {})
 </script>
 
 <style></style>

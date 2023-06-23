@@ -1,9 +1,15 @@
 <template>
   <div class="p-1 tabs text-gray-300 md:w-1/5 2xl:w-[15%] flex flex-col justify-start relative">
-    <div v-if="store.getters.account == ''" class="top-0 left-0 absolute h-full w-full flex flex-col justify-center items-center opacity-90 bg-[#18181b] z-10">
-      <span class="mb-3 font-bold">Please connect wallet to use</span>
-      <ConnectWallet class="z-20"></ConnectWallet>
+    <div v-if="store.getters.account == '' || chainId_ != 4002" class="top-0 left-0 absolute h-full w-full flex flex-col justify-center items-center opacity-90 bg-[#18181b] z-10">
+      <div v-if="chainId_ != 4002">
+        <wrong-network></wrong-network>
+      </div>
+      <div class="flex flex-col justify-center items-center" v-else>
+        <span class="mb-3 font-bold">Please connect wallet to use</span>
+        <ConnectWallet class="z-20"></ConnectWallet>
+      </div>
     </div>
+
     <div class="flex w-full flex-col">
       <span class="text-left cursor-pointer">Create Order</span>
       <div class="tabs tabs-boxed bg-neutral text-gray-200 rounded-md">
@@ -70,12 +76,13 @@
 
 <script setup>
 import { ethers } from "ethers"
-import { ref, onMounted, computed } from "vue"
+import { ref, onMounted, computed, watch } from "vue"
 import OrderType from "./OrderTypeSelect.vue"
 import Asset from "./Asset.vue"
 import { placeOrder, confirmOrder, confirmExecute } from "../api"
 import store from "../store"
 import ConnectWallet from "./ConnectWallet.vue"
+import WrongNetwork from "./WrongNetwork.vue"
 import { ORDER } from "../constants/orderbook"
 import { getPermitSignature } from "../utils/sign"
 import getExchangeContract from "../contract/exchange"
@@ -87,6 +94,7 @@ const sell = ref(null)
 const orderSide = ref("buy")
 const price = ref(0)
 const amount = ref(0)
+const chainId_ = ref(0)
 
 const onSideClick = (side) => {
   if (side == "buy") {
@@ -168,6 +176,24 @@ const onUnlockQuoteToken = async () => {
   const erc20 = getERC20Contract(getERC20Address(store.getters.quoteToken, store.getters.chainId))
   await erc20.approve(getExchangeAddress(store.getters.chainId), ethers.utils.parseEther("100"))
 }
+onMounted(() => {
+  const getChainId = async () => {
+    const { ethereum } = window
+    const provider = new ethers.providers.Web3Provider(ethereum)
+    const { chainId } = await provider.getNetwork()
+    chainId_.value = chainId
+    console.log("chainId", chainId)
+  }
+
+  getChainId()
+})
+
+watch(
+  () => store.getters.chainId,
+  () => {
+    chainId_.value = store.getters.chainId
+  },
+)
 </script>
 <style scoped>
 /* .input-group :first-child {
