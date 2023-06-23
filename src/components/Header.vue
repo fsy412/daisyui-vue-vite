@@ -24,7 +24,7 @@
           <li><a>Item 3</a></li>
         </ul>
       </div>
-      <a class="btn btn-ghost normal-case text-3xl text-transparent bg-clip-text bg-gradient-to-tr from-[#9945FF] to-[#14F195]">FantomDEX</a>
+      <router-link to="/"> <a class="btn btn-ghost normal-case text-3xl text-transparent bg-clip-text bg-gradient-to-tr from-[#9945FF] to-[#14F195]">FantomDEX</a> </router-link>
     </div>
     <div class="navbar-center hidden lg:flex">
       <ul class="menu menu-horizontal p-0 font-bold">
