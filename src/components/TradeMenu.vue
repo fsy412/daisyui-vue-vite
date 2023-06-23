@@ -6,9 +6,9 @@
     </div>
     <div class="flex w-full flex-col">
       <span class="text-left cursor-pointer">Create Order</span>
-      <div class="tabs tabs-boxed bg-neutral text-gray-200">
-        <a class="tab tab-active text-gray-200 w-1/2" @click="onSideClick('buy')" ref="buy">Buy</a>
-        <a class="tab text-gray-200 w-1/2" @click="onSideClick('sell')" ref="sell">Sell</a>
+      <div class="tabs tabs-boxed bg-neutral text-gray-200 rounded-sm">
+        <a class="tab tab-active text-gray-200 w-1/2 rounded-sm" @click="onSideClick('buy')" ref="buy">Buy</a>
+        <a class="tab text-gray-200 w-1/2 rounded-sm" @click="onSideClick('sell')" ref="sell">Sell</a>
       </div>
     </div>
     <div class="mx-auto mt-2 w-full">
@@ -16,35 +16,35 @@
 
       <!-- limit order -->
       <div v-if="store.state.orderType == 'limit'">
-        <div class="form-control rounded-none bg-neutral mt-2">
+        <div class="form-control rounded-sm bg-neutral mt-2">
           <div class="input-group">
-            <span class="rounded-none bg-neutral text-gray-300 w-[80px]">Price</span>
-            <input type="text" placeholder="0.0" class="input input-bordered h-8 w-28 rounded-none bg-neutral" v-model="price" />
-            <span class="w-20 rounded-none bg-neutral">{{ store.getters.quoteToken }}</span>
+            <span class="rounded-sm bg-neutral text-gray-300 w-[80px]">Price</span>
+            <input type="text" placeholder="0.0" class="input input-bordered h-8 w-28 rounded-sm bg-neutral" v-model="price" />
+            <span class="w-20 rounded-sm bg-neutral">{{ store.getters.quoteToken }}</span>
           </div>
         </div>
-        <div class="form-control rounded-none bg-neutral">
+        <div class="form-control rounded-sm bg-neutral mt-2">
           <div class="input-group">
-            <span class="rounded-none bg-neutral text-gray-300 w-[80px]">Amount</span>
-            <input type="text" placeholder="0.0" class="input input-bordered h-8 w-28 rounded-none bg-neutral" v-model="amount" />
-            <span class="w-20 rounded-none bg-neutral">{{ store.getters.baseToken }}</span>
+            <span class="rounded-sm bg-neutral text-gray-300 w-[80px]">Amount</span>
+            <input type="text" placeholder="0.0" class="input input-bordered h-8 w-28 rounded-sm bg-neutral" v-model="amount" />
+            <span class="w-20 rounded-sm bg-neutral">{{ store.getters.baseToken }}</span>
           </div>
         </div>
       </div>
       <!-- market order tab -->
       <div v-if="store.state.orderType == 'market'">
-        <div class="form-control rounded-none bg-neutral mt-2">
+        <div class="form-control rounded-sm bg-neutral mt-2">
           <div class="input-group">
-            <span class="rounded-none bg-neutral text-gray-300 w-[80px]">Price</span>
-            <input type="text" placeholder="0.0" class="input input-bordered h-8 w-28 rounded-none bg-neutral" v-model="price" />
-            <span class="w-20 rounded-none bg-neutral">USD</span>
+            <span class="rounded-sm bg-neutral text-gray-300 w-[80px]">Price</span>
+            <input type="text" placeholder="0.0" class="input input-bordered h-8 w-28 rounded-sm bg-neutral" v-model="price" />
+            <span class="w-20 rounded-sm bg-neutral">USD</span>
           </div>
         </div>
-        <div class="form-control rounded-none bg-neutral">
+        <div class="form-control rounded-sm bg-neutral mt-2">
           <div class="input-group">
-            <span class="rounded-none bg-neutral text-gray-300 w-[80px]">Amount</span>
-            <input type="text" placeholder="0.0" class="input input-bordered h-8 w-28 rounded-none bg-neutral" v-model="amount" />
-            <span class="w-20 rounded-none bg-neutral">USD</span>
+            <span class="rounded-sm bg-neutral text-gray-300 w-[80px]">Amount</span>
+            <input type="text" placeholder="0.0" class="input input-bordered h-8 w-28 rounded-sm bg-neutral" v-model="amount" />
+            <span class="w-20 rounded-sm bg-neutral">USD</span>
           </div>
         </div>
       </div>
@@ -62,7 +62,7 @@
     </div>
     <Asset></Asset>
     <div class="mt-5 w-full px-2">
-      <button v-if="store.getters.quoteAllowance == 0" class="w-full btn bg-green-500" :class="{ 'blur-sm': store.getters.account == '' }" @click="onUnlockQuoteToken()">Unlock {{ store.getters.quoteToken }}</button>
+      <button v-if="store.getters.quoteAllowance == 0" class="w-full btn bg-green-500" :class="{ 'blur-sm': store.getters.account == '' }" @click="onUnlockQuoteToken">Unlock {{ store.getters.quoteToken }}</button>
       <button v-else class="w-full btn bg-green-500" :class="{ 'blur-sm': store.getters.account == '' }" @click="onPlaceOrder">Place Order</button>
     </div>
   </div>
@@ -73,7 +73,7 @@ import { ethers } from "ethers"
 import { ref, onMounted, computed } from "vue"
 import OrderType from "./OrderTypeSelect.vue"
 import Asset from "./Asset.vue"
-import { placeOrder } from "../api"
+import { placeOrder, confirmOrder, confirmExecute } from "../api"
 import store from "../store"
 import ConnectWallet from "./ConnectWallet.vue"
 import { ORDER } from "../constants/orderbook"
@@ -85,32 +85,8 @@ import { getERC20Address, getExchangeAddress } from "../utils/address"
 const buy = ref(null)
 const sell = ref(null)
 const orderSide = ref("buy")
-
-// import { defineEmits, defineProps } from 'vue';
-// const props = defineProps({
-//   modelValue: String,
-// });
-
 const price = ref(0)
 const amount = ref(0)
-// const price = computed({
-//   get: function () {
-//     return this.modelValue;
-//   },
-//   set: function (value) {
-//     console.log("11111111111111111111111", value);
-//     // this.$emit("update:modelValue", value);
-//   },
-// });
-
-// const amount = computed({
-//   get: function () {
-//     return this.modelValue;
-//   },
-//   set: function (value) {
-//     console.log("2222222222222222222222", value);
-//   },
-// });
 
 const onSideClick = (side) => {
   if (side == "buy") {
@@ -141,20 +117,28 @@ const onPlaceOrder = async () => {
   console.log("placeOrder ==>", ret)
 
   if (ret.matchResult == ORDER.Posted) {
-    console.log("call contract createOrder", side, price_, qty)
     const { ethereum } = window
     const provider = new ethers.providers.Web3Provider(ethereum)
     const signer = provider.getSigner()
     const erc20 = getERC20Contract(getERC20Address(store.getters.baseToken, store.getters.chainId))
     const amountHuge = ethers.utils.parseEther(amount.value)
-    const deadline = 2656860541
+    const deadline = ethers.constants.MaxUint256
     const exchangeContract = getExchangeContract(getExchangeAddress(store.getters.chainId))
-    const { v, r, s } = await getPermitSignature(signer, store.getters.account, erc20, exchangeContract.address, amountHuge, deadline, store.getters.chainId)
-    const tx = await exchangeContract.createOrderWithPermit(side, price_, amountHuge, amountHuge, deadline, v, r, s)
-    await tx.wait()
+    const { r, s, v } = await getPermitSignature(signer, store.getters.account, erc20, exchangeContract.address, amountHuge, deadline)
+    console.log("call contract createOrder", side, price_, qty)
+    const tx = await exchangeContract.createOrderWithPermit(side, ethers.utils.parseEther(price.value), amountHuge, amountHuge, deadline, v, r, s)
+    let hash = await tx.wait()
+    console.log(hash.transactionHash)
+
+    await confirmOrder({
+      address: store.getters.account,
+      marketId: store.getters.market,
+      orderId: ret.orderId,
+      hash: hash.transactionHash,
+    })
   } else if (ret.matchResult == ORDER.Filled) {
     const makers = ret.match.makers
-    console.log("call contract executeOrder", side, price_, qty, makers)
+
     const { ethereum } = window
     const provider = new ethers.providers.Web3Provider(ethereum)
     const signer = provider.getSigner()
@@ -162,11 +146,21 @@ const onPlaceOrder = async () => {
 
     console.log(erc20.address)
     const amountHuge = ethers.utils.parseEther(amount.value)
-    const deadline = 2656860541
+    const deadline = ethers.constants.MaxUint256
     const exchangeContract = getExchangeContract(getExchangeAddress(store.getters.chainId))
-    const { v, r, s } = await getPermitSignature(signer, store.getters.account, erc20, exchangeContract.address, amountHuge, deadline, store.getters.chainId)
-    const tx = await exchangeContract.executeOrderWithPermit(makers, side, price_, amountHuge, amountHuge, deadline, v, r, s)
-    await tx.wait()
+    const { v, r, s } = await getPermitSignature(signer, store.getters.account, erc20, exchangeContract.address, amountHuge, deadline)
+    console.log("call contract executeOrder", makers, side, price_, qty)
+    console.log("      ", ethers.utils.parseEther(price.value).toString(), amountHuge.toString())
+    const tx = await exchangeContract.executeOrderWithPermit(makers, side, ethers.utils.parseEther(price.value), amountHuge, amountHuge, deadline, v, r, s)
+    let hash = await tx.wait()
+    console.log(hash)
+
+    await confirmExecute({
+      address: store.getters.account,
+      marketId: store.getters.market,
+      orderId: ret.orderId,
+      hash: hash.transactionHash,
+    })
   }
 }
 

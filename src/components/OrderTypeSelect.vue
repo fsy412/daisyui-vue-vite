@@ -5,7 +5,7 @@
         <span class="ml-2 w-full">{{ store.state.orderType }}</span></label
       >
 
-      <ul tabindex="0" class="dropdown-content menu shadow rounded-none w-full h-full">
+      <ul tabindex="0" class="dropdown-content menu shadow w-full h-full">
         <li class="w-full bg-gray-400">
           <a class="w-full h-full py-1" @click="handleClick('limit')">limit</a>
         </li>

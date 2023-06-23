@@ -1,7 +1,7 @@
 <template>
   <div class="dropdown w-1/5 2xl:w-[15%] bg-gray-500">
-    <label tabindex="0" class="btn w-full rounded-none text-2xl">{{ store.getters.market }}</label>
-    <ul tabindex="0" class="dropdown-content menu shadow bg-base-100 rounded-none w-full">
+    <label tabindex="0" class="btn w-full rounded-sm text-2xl">{{ store.getters.market }}</label>
+    <ul tabindex="0" class="dropdown-content menu shadow bg-base-100 rounded-sm w-full">
       <li>
         <a class="text-center w-full flex flex-row justify-center" @click="handleClick('BTC-USDT')">BTC-USDT</a>
       </li>
