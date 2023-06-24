@@ -2,8 +2,11 @@
   <div class="dropdown w-1/5 2xl:w-[15%] bg-gray-500">
     <label tabindex="0" class="btn w-full rounded-sm text-2xl flex flex-row space-x-5">
       <img class="h-full py-1.5" :src="icon[store.getters.baseToken]" alt="" />
-      <span class="text-right">{{ store.getters.market }}</span></label
-    >
+      <span class="text-right">{{ store.getters.market }}</span>
+      <div>
+        <svg class="ml-[1rem]" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#98A1C0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+      </div>
+    </label>
     <ul tabindex="0" class="dropdown-content menu shadow bg-base-100 rounded-sm w-full font-bold">
       <li>
         <a class="text-center w-full flex flex-row justify-center" @click="handleClick('BTC-USDT')">BTC-USDT</a>
