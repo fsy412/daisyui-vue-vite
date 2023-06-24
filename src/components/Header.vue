@@ -1,5 +1,5 @@
 <template>
-  <div class="navbar bg-neutral text-gray-200">
+  <div class="navbar bg-neutral text-gray-200 z-20">
     <div class="navbar-start">
       <div class="dropdown">
         <label tabindex="0" class="btn btn-ghost lg:hidden">
@@ -44,8 +44,9 @@
         <li><a>FDX</a></li>
       </ul>
     </div>
-    <div class="navbar-end">
-      <div v-if="chainId_ == 4002">
+    <div class="navbar-end relative">
+      <Drawer @click="click"></Drawer>
+      <div :class="zIndex" v-if="chainId_ == 4002">
         <div v-if="store.getters.account == ''">
           <ConnectWallet></ConnectWallet>
         </div>
@@ -65,10 +66,17 @@ import { ethers } from "ethers"
 import ConnectWallet from "./ConnectWallet.vue"
 import DisconnectWallet from "./DisconnectWallet.vue"
 import WrongNetwork from "./WrongNetwork.vue"
+import Drawer from "./Drawer.vue"
 import store from "../store"
 import { ref, watch, onMounted, onUnmounted } from "vue"
 
+const zIndex = ref("z-20")
 const chainId_ = ref(0)
+
+const click = () => {
+  console.log("click")
+  zIndex.value = "z-0"
+}
 watch(
   () => store.getters.account,
   () => {
