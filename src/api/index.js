@@ -55,3 +55,11 @@ export function confirmExecute(data) {
     data,
   })
 }
+
+export function openOrders(data) {
+  return request({
+    url: "/open_orders",
+    method: "post",
+    data,
+  })
+}

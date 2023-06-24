@@ -41,7 +41,7 @@
             <li><a>Submenu 2</a></li>
           </ul>
         </li> -->
-        <li><a>Faucet</a></li>
+        <li><a>FDX</a></li>
       </ul>
     </div>
     <div class="navbar-end">

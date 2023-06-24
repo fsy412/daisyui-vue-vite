@@ -18,15 +18,15 @@
         </tr>
       </thead>
       <tbody class="text-gray-400">
-        <tr v-for="(item, index) in trades" :key="index" class="">
-          <th class="text-left">{{ item.Market }}</th>
+        <tr v-for="(item, index) in orders" :key="index" class="">
+          <th class="text-left">{{ store.getters.market }}</th>
           <td>{{ item.Type }}</td>
-          <td>{{ item.Side }}</td>
-          <td>{{ item.Size }}</td>
-          <td>{{ item.Price }}</td>
-          <td>{{ item.Filled }}</td>
-          <td>{{ "2023-5-7 11:20:43" }}</td>
-          <td>cancel</td>
+          <td class="capitalize">{{ item.side }}</td>
+          <td>{{ item.quantity }}</td>
+          <td>{{ item.price }}</td>
+          <td>{{ 0 }}</td>
+          <td>{{ item.timestamp }}</td>
+          <td class=" "><button class="btn btn-xs">Cancel</button></td>
         </tr>
       </tbody>
     </table>
@@ -61,7 +61,13 @@
   </div>
 </template>
 <script setup>
-import { ref } from "vue"
+import { ref, onMounted, onUnmounted } from "vue"
+import { openOrders } from "../api"
+import { useStore } from "vuex"
+
+const store = useStore()
+const orders = ref([])
+
 const tab = ref(1)
 const onTab = (val) => {
   tab.value = val
@@ -76,6 +82,26 @@ const trades = [
     Filled: "0",
   },
 ]
+
+const timer = ref()
+onMounted(() => {
+  timer.value = setInterval(async () => {
+    try {
+      let orderList = await openOrders({ address: store.getters.account, marketId: store.getters.market })
+      console.log("open orders", orderList)
+      orders.value = orderList
+    } catch (error) {}
+  }, 1500)
+})
+
+onUnmounted(() => {
+  clearInterval(timer.value)
+  timer.value = ""
+})
 </script>
 
-<style scoped></style>
+<style scoped>
+.btn {
+  min-height: 1rem;
+}
+</style>

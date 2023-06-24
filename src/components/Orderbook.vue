@@ -1,6 +1,6 @@
 <template>
   <div class="tabs text-gray-300 md:w-1/5 2xl:w-[15%] flex flex-col justify-start p-1">
-    <span class="w-full">Order Book</span>
+    <span class="w-full">Orderbook</span>
     <div class="w-full justify-between flex text-xs text-gray-500">
       <span>Price({{ store.state.quoteToken }})</span>
       <span>Size({{ store.state.baseToken }})</span>
@@ -39,13 +39,12 @@ onMounted(() => {
       let ret = await orderbook({
         marketID: store.getters.market,
       })
-
       let bids = ret[1]
       let asks = ret[0]
       let totalVolume = 0
 
-      bids.map((item) => (totalVolume += Number(item.quantity)))
-      asks.map((item) => (totalVolume += Number(item.quantity)))
+      bids?.map((item) => (totalVolume += Number(item.quantity)))
+      asks?.map((item) => (totalVolume += Number(item.quantity)))
 
       bidOrders_.value = bids
       askOrders_.value = asks

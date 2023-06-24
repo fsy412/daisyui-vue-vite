@@ -71,6 +71,8 @@
       <button v-if="store.getters.quoteAllowance == 0" class="w-full btn bg-green-500" :class="{ 'blur-sm': store.getters.account == '' }" @click="onUnlockQuoteToken">Unlock {{ store.getters.quoteToken }}</button>
       <button v-else class="w-full btn bg-green-500" :class="{ 'blur-sm': store.getters.account == '' }" @click="onPlaceOrder">Place Order</button>
     </div>
+
+    <OrderSummary></OrderSummary>
   </div>
 </template>
 
@@ -78,6 +80,7 @@
 import { ethers } from "ethers"
 import { ref, onMounted, computed, watch } from "vue"
 import OrderType from "./OrderTypeSelect.vue"
+import OrderSummary from "./OrderSummary.vue"
 import Asset from "./Asset.vue"
 import { placeOrder, confirmOrder, confirmExecute } from "../api"
 import store from "../store"

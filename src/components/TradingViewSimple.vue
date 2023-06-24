@@ -106,6 +106,7 @@ export default {
 
       kline({ symbol: `${base}${quote}`, interval: this.span })
         .then((res) => {
+          console.log("1111111111111111", res)
           let data = JSON.parse(res)
           const cdata = data.map((d) => {
             return { time: d[0] / 1000, open: d[1], high: d[2], low: d[3], close: d[4] }
